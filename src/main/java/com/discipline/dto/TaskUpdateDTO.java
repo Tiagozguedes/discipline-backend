@@ -2,8 +2,12 @@ package com.discipline.dto;
 
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskUpdateDTO {
+    private Long id;
     private String title;
     private String description;
     private String status;

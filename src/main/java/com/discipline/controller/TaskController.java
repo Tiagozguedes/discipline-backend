@@ -43,6 +43,11 @@ public class TaskController {
         taskService.delete(id);
     }
 
+    @PutMapping("/reorder")
+    public void reorder(@RequestBody List<TaskUpdateDTO> items) {
+        taskService.reorder(items);
+    }
+
     // ---- SubTasks ----
 
     @PostMapping("/{taskId}/subtasks")
