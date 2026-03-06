@@ -1,6 +1,7 @@
 package com.discipline.service;
 
 import com.discipline.dto.HabitCreateDTO;
+import com.discipline.dto.HabitUpdateDTO;
 import com.discipline.entity.Habit;
 import com.discipline.entity.HabitCompletion;
 import com.discipline.repository.HabitCompletionRepository;
@@ -32,6 +33,26 @@ public class HabitService {
                 .category(dto.getCategory() != null ? dto.getCategory() : "general")
                 .color(dto.getColor())
                 .build();
+        return habitRepository.save(habit);
+    }
+
+    public Habit update(Long id, HabitUpdateDTO dto) {
+        Habit habit = habitRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Habit not found: " + id));
+
+        if (dto.getName() != null)
+            habit.setName(dto.getName());
+        if (dto.getDescription() != null)
+            habit.setDescription(dto.getDescription());
+        if (dto.getFrequency() != null)
+            habit.setFrequency(dto.getFrequency());
+        if (dto.getCategory() != null)
+            habit.setCategory(dto.getCategory());
+        if (dto.getColor() != null)
+            habit.setColor(dto.getColor());
+        if (dto.getActive() != null)
+            habit.setActive(dto.getActive());
+
         return habitRepository.save(habit);
     }
 

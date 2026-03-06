@@ -1,6 +1,7 @@
 package com.discipline.service;
 
 import com.discipline.dto.CalendarEventCreateDTO;
+import com.discipline.dto.CalendarEventUpdateDTO;
 import com.discipline.entity.CalendarEvent;
 import com.discipline.repository.CalendarEventRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,26 @@ public class CalendarService {
                 .color(dto.getColor() != null ? dto.getColor() : "#FABE00")
                 .allDay(dto.getAllDay() != null ? dto.getAllDay() : false)
                 .build();
+        return calendarRepository.save(event);
+    }
+
+    public CalendarEvent update(Long id, CalendarEventUpdateDTO dto) {
+        CalendarEvent event = calendarRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Calendar event not found: " + id));
+
+        if (dto.getTitle() != null)
+            event.setTitle(dto.getTitle());
+        if (dto.getDescription() != null)
+            event.setDescription(dto.getDescription());
+        if (dto.getStartTime() != null)
+            event.setStartTime(LocalDateTime.parse(dto.getStartTime()));
+        if (dto.getEndTime() != null)
+            event.setEndTime(LocalDateTime.parse(dto.getEndTime()));
+        if (dto.getColor() != null)
+            event.setColor(dto.getColor());
+        if (dto.getAllDay() != null)
+            event.setAllDay(dto.getAllDay());
+
         return calendarRepository.save(event);
     }
 

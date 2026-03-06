@@ -32,6 +32,11 @@ public class FinanceController {
         return financeService.createTransaction(dto);
     }
 
+    @PutMapping("/transactions/{id}")
+    public Transaction updateTransaction(@PathVariable Long id, @RequestBody TransactionUpdateDTO dto) {
+        return financeService.updateTransaction(id, dto);
+    }
+
     @DeleteMapping("/transactions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTransaction(@PathVariable Long id) {
@@ -49,6 +54,11 @@ public class FinanceController {
     @ResponseStatus(HttpStatus.CREATED)
     public Investment createInvestment(@RequestBody InvestmentCreateDTO dto) {
         return financeService.createInvestment(dto);
+    }
+
+    @PutMapping("/investments/{id}")
+    public Investment updateInvestment(@PathVariable Long id, @RequestBody InvestmentUpdateDTO dto) {
+        return financeService.updateInvestment(id, dto);
     }
 
     @DeleteMapping("/investments/{id}")

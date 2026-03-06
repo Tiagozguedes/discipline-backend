@@ -39,6 +39,24 @@ public class FinanceService {
         return transactionRepository.save(tx);
     }
 
+    public Transaction updateTransaction(Long id, TransactionUpdateDTO dto) {
+        Transaction tx = transactionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transaction not found: " + id));
+
+        if (dto.getDescription() != null)
+            tx.setDescription(dto.getDescription());
+        if (dto.getAmount() != null)
+            tx.setAmount(BigDecimal.valueOf(dto.getAmount()));
+        if (dto.getType() != null)
+            tx.setType(dto.getType());
+        if (dto.getCategory() != null)
+            tx.setCategory(dto.getCategory());
+        if (dto.getDate() != null)
+            tx.setDate(LocalDate.parse(dto.getDate()));
+
+        return transactionRepository.save(tx);
+    }
+
     public void deleteTransaction(Long id) {
         transactionRepository.deleteById(id);
     }
@@ -54,10 +72,31 @@ public class FinanceService {
                 .name(dto.getName())
                 .type(dto.getType())
                 .amountInvested(BigDecimal.valueOf(dto.getAmountInvested()))
-                .currentValue(BigDecimal.valueOf(dto.getCurrentValue() != null ? dto.getCurrentValue() : dto.getAmountInvested()))
+                .currentValue(BigDecimal
+                        .valueOf(dto.getCurrentValue() != null ? dto.getCurrentValue() : dto.getAmountInvested()))
                 .purchaseDate(LocalDate.parse(dto.getPurchaseDate()))
                 .notes(dto.getNotes())
                 .build();
+        return investmentRepository.save(inv);
+    }
+
+    public Investment updateInvestment(Long id, InvestmentUpdateDTO dto) {
+        Investment inv = investmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Investment not found: " + id));
+
+        if (dto.getName() != null)
+            inv.setName(dto.getName());
+        if (dto.getType() != null)
+            inv.setType(dto.getType());
+        if (dto.getAmountInvested() != null)
+            inv.setAmountInvested(BigDecimal.valueOf(dto.getAmountInvested()));
+        if (dto.getCurrentValue() != null)
+            inv.setCurrentValue(BigDecimal.valueOf(dto.getCurrentValue()));
+        if (dto.getPurchaseDate() != null)
+            inv.setPurchaseDate(LocalDate.parse(dto.getPurchaseDate()));
+        if (dto.getNotes() != null)
+            inv.setNotes(dto.getNotes());
+
         return investmentRepository.save(inv);
     }
 

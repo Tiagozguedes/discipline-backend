@@ -1,6 +1,7 @@
 package com.discipline.controller;
 
 import com.discipline.dto.CalendarEventCreateDTO;
+import com.discipline.dto.CalendarEventUpdateDTO;
 import com.discipline.entity.CalendarEvent;
 import com.discipline.service.CalendarService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class CalendarController {
     @ResponseStatus(HttpStatus.CREATED)
     public CalendarEvent create(@RequestBody CalendarEventCreateDTO dto) {
         return calendarService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public CalendarEvent update(@PathVariable Long id, @RequestBody CalendarEventUpdateDTO dto) {
+        return calendarService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
